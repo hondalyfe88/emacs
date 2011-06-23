@@ -219,3 +219,7 @@ by using nxml's indentation rules."
 (require 'ini-mode)
 (add-to-list 'auto-mode-alist '(".*\\.ini$" . ini-mode))
 (add-to-list 'auto-mode-alist '(".*\\.gitconfig$" . ini-mode))
+
+;Solarized color theme
+(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
+(require 'color-theme-solarized)

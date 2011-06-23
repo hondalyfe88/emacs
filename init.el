@@ -186,6 +186,7 @@ by using nxml's indentation rules."
 
 ;; I don't like fill unless I want it, so set it to an insanely large number
 ;(set-fill-column 50000)
+(setq fill-column 50000)
 (auto-fill-mode -1)
 
 ;; git-emacs package. Using magit for now instead

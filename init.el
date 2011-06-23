@@ -173,3 +173,9 @@
 ;; git-emacs package. Using magit for now instead
  ;(add-to-list 'load-path "~/.emacs.d/git-emacs")
  ;(autoload 'git-emacs "git-emacs")
+
+
+;INI File highlighting
+(require 'ini-mode)
+(add-to-list 'auto-mode-alist '(".*\\.ini$" . ini-mode))
+(add-to-list 'auto-mode-alist '(".*\\.gitconfig$" . ini-mode))

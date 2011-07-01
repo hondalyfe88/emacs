@@ -223,3 +223,6 @@ by using nxml's indentation rules."
 ;Solarized color theme
 (add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
 (require 'color-theme-solarized)
+
+;File associations for org-mode
+(add-to-list 'auto-mode-alist '("\.org$" . org-mode))

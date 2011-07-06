@@ -226,3 +226,7 @@ by using nxml's indentation rules."
 
 ;File associations for org-mode
 (add-to-list 'auto-mode-alist '("\.org$" . org-mode))
+
+;Wire in showoff mode
+(add-to-list 'load-path "~/.emacs.d/showoff-mode")
+(require 'showoff-mode)

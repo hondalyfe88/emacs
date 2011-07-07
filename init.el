@@ -1,3 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Aquamacs setup
+;; From customizations.el which gets generated in the
+;; /Users/mccm06/Library/Preferences/Aquamacs Emacs/customizations.el folder.
+(custom-set-variables
+ ;; Set the toolbar buttons to be plaintext
+ '(ns-tool-bar-display-mode (quote labels) t)
+ '(ns-tool-bar-size-mode (quote regular) t)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Matthew's custom setup preferences and mode loads.
+
 (setq load-path (cons "~/.emacs.d" load-path))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

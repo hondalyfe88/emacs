@@ -243,3 +243,11 @@ by using nxml's indentation rules."
 ;Wire in showoff mode
 (add-to-list 'load-path "~/.emacs.d/showoff-mode")
 (require 'showoff-mode)
+
+;Keyboard shortcuts
+;(global-set-key [f6] 'split-window-horizontally)
+;(global-set-key [f7] 'split-window-vertically)
+;(global-set-key [kbd "M-d"] 'delete-window)
+
+;(global-set-key [kbd "M-s"] 'save-buffer)
+;(global-set-key [kbd "M-z"] 'undo)

@@ -19,6 +19,10 @@
 
 (setq special-display-regexps nil)
 (setq pop-up-frames nil)
-(one-buffer-one-frame-mode 0)
+
+;; (one-buffer-one-frame-mode 0)
+
 ;; open *help* in current frame
-(setq special-display-regexps (remove "[ ]?\\*[hH]elp.*" special-display-regexps))
+;;(setq special-display-regexps (remove "[ ]?\\*[hH]elp.*" special-display-regexps))
+
+;(define-key osx-key-mode-map (kbd "A-w") 'my-close-current-window-asktosave)

@@ -83,7 +83,8 @@ by using nxml's indentation rules."
 (setq-default flyspell-mode t)
 ;; auto-load for flyspell mode
 (dolist (hook '(markdown-mode-hook))
-  (add-hook hook (lambda () (flyspell-mode 1))))
+  (add-hook hook (lambda () (flyspell-mode 1)))
+)
 
 ;;;;;;;;;;;;;;;;
 ;; ido
@@ -120,13 +121,39 @@ by using nxml's indentation rules."
 ;; wrap-region
 (add-to-list 'load-path "~/.emacs.d/wrap-region.el")
 (require 'wrap-region)
-(wrap-region-mode t)
+;(wrap-region-mode t)
+
 (add-hook 'ruby-mode-hook
           '(lambda() (wrap-region-mode t)
 ))
+
 (add-hook 'markdown-mode-hook
-          '(lambda() (wrap-region-mode t)
+          '(lambda()
+          (wrap-region-add-punctuation "+" "+")
+          (wrap-region-add-punctuation "_" "_")
+          (wrap-region-add-punctuation "`" "`")
+          (wrap-region-add-punctuation "*" "*")
+          ;(wrap-region-set-mode-punctuations '("\"" "("))
+          (wrap-region-set-mode-punctuations '("\"" "(" "+" "_" "`" "*"))
+          (wrap-region-mode t)
+          (auto-fill-mode -1)
 ))
+
+;; Add extra wrappable punctuation to the wrap-region-mode for asciidoc editing
+(add-hook 'adoc-mode-hook
+          '(lambda()
+          (wrap-region-add-punctuation "+" "+")
+          (wrap-region-add-punctuation "_" "_")
+          (wrap-region-add-punctuation "`" "`")
+          ;(wrap-region-add-punctuation "*" "*")
+          ;(remhash "'" wrap-region-punctuations-table)
+          (wrap-region-set-mode-punctuations '("\"" "(" "+" "_" "`"))
+          (wrap-region-mode t)
+          (auto-fill-mode -1)
+          (prin1 `"Im in the adoc-mode-hook" t)
+))
+
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -190,6 +217,7 @@ by using nxml's indentation rules."
 (autoload 'adoc-mode "adoc-mode")
 ;; Associate it to the .asc file extension
 (add-to-list 'auto-mode-alist (cons "\\.asc\\'" 'adoc-mode))
+(add-to-list 'auto-mode-alist (cons "\\.asciidoc\\'" 'adoc-mode))
 
 ;; Save the state of the desktop and restore it upon reopening emacs
 ;; Saving to the user's home directory seems to be the best choice.
@@ -239,6 +267,7 @@ by using nxml's indentation rules."
 
 ;File associations for org-mode
 (add-to-list 'auto-mode-alist '("\.org$" . org-mode))
+(add-to-list 'auto-mode-alist '("\.orgmode$" . org-mode))
 
 ;Wire in showoff mode
 (add-to-list 'load-path "~/.emacs.d/showoff-mode")
@@ -262,3 +291,24 @@ by using nxml's indentation rules."
     (load
      (expand-file-name "~/.emacs.d/elpa/package.el"))
   (package-initialize))
+
+(global-set-key (kbd "C-c j") 'flyspell-check-previous-highlighted-word)
+
+;; Turn off the tab bar
+(tabbar-mode -1)
+
+;; Use ibuffer for buffer nav
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;;(speedbar-change-initial-expansion-list "buffers")
+;;(global-set-key  [f8] 'speedbar-get-focus)
+
+(add-hook 'after-change-major-mode-hook 
+          '(lambda ()
+             (tabbar-mode -1)
+             (auto-fill-mode -1)))
+
+;(global-set-key (kbd "M-w") 'kill-buffer)
+;(define-key (kbd "M-w") 'kill-buffer)
+
+(prin1 '9999999INITING t)

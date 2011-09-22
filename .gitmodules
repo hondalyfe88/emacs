@@ -4,3 +4,6 @@
 [submodule "git-emacs"]
 	path = git-emacs
 	url = https://github.com/tsgates/git-emacs.git
+[submodule "emacs-color-theme-solarized"]
+	path = emacs-color-theme-solarized
+	url = https://github.com/sellout/emacs-color-theme-solarized.git

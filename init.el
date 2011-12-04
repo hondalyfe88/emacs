@@ -132,7 +132,7 @@ by using nxml's indentation rules."
           (wrap-region-add-punctuation "+" "+")
           (wrap-region-add-punctuation "_" "_")
           (wrap-region-add-punctuation "`" "`")
-          (wrap-region-add-punctuation "*" "*")
+          ;(wrap-region-add-punctuation "*" "*")
           ;(wrap-region-set-mode-punctuations '("\"" "("))
           (wrap-region-set-mode-punctuations '("\"" "(" "+" "_" "`" "*"))
           (wrap-region-mode t)

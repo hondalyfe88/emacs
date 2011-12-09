@@ -42,12 +42,27 @@ by using nxml's indentation rules."
     (message "Ah, much better!"))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;
+; icicles
+(add-to-list 'load-path "~/.emacs.d/icicles")
+(require 'icicles)
+;Turn on icicles
+(icy-mode)
+
+
 ;;;;;;;;;;;;;;;;
 ;; color theme
 (add-to-list 'load-path "~/.emacs.d/color-theme")
 (require 'color-theme)
 (color-theme-initialize)
-(color-theme-arjen)
+;(color-theme-arjen)
+
+;Solarized color theme
+;(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
+;(require 'color-theme-solarized)
+;(color-theme-scintilla)
+(color-theme-gtk-ide)
+
 
 ;; set up alt key to work as META on Mac
 (set-keyboard-coding-system 'mac-roman)
@@ -230,10 +245,6 @@ by using nxml's indentation rules."
 (setq fill-column 50000)
 (auto-fill-mode -1)
 
-;; git-emacs package. Using magit for now instead
- ;(add-to-list 'load-path "~/.emacs.d/git-emacs")
- ;(autoload 'git-emacs "git-emacs")
-
 ;; Groovy mode
 ;;; turn on syntax highlighting
 (global-font-lock-mode 1)
@@ -260,10 +271,6 @@ by using nxml's indentation rules."
 (require 'ini-mode)
 (add-to-list 'auto-mode-alist '(".*\\.ini$" . ini-mode))
 (add-to-list 'auto-mode-alist '(".*\\.gitconfig$" . ini-mode))
-
-;Solarized color theme
-(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
-(require 'color-theme-solarized)
 
 ;File associations for org-mode
 (add-to-list 'auto-mode-alist '("\.org$" . org-mode))
@@ -310,5 +317,3 @@ by using nxml's indentation rules."
 
 ;(global-set-key (kbd "M-w") 'kill-buffer)
 ;(define-key (kbd "M-w") 'kill-buffer)
-
-(prin1 '9999999INITING t)

@@ -147,9 +147,9 @@ by using nxml's indentation rules."
           (wrap-region-add-punctuation "+" "+")
           (wrap-region-add-punctuation "_" "_")
           (wrap-region-add-punctuation "`" "`")
-          (wrap-region-add-punctuation "*" "*")
+          ;(wrap-region-add-punctuation "*" "*")
           ;(wrap-region-set-mode-punctuations '("\"" "("))
-          (wrap-region-set-mode-punctuations '("\"" "(" "+" "_" "`" "*"))
+          (wrap-region-set-mode-punctuations '("\"" "(" "+" "_" "`"))
           (wrap-region-mode t)
           (auto-fill-mode -1)
 ))
@@ -165,7 +165,7 @@ by using nxml's indentation rules."
           (wrap-region-set-mode-punctuations '("\"" "(" "+" "_" "`"))
           (wrap-region-mode t)
           (auto-fill-mode -1)
-          (prin1 `"Im in the adoc-mode-hook" t)
+          ;(prin1 `"Im in the adoc-mode-hook" t)
 ))
 
 

@@ -49,6 +49,10 @@ by using nxml's indentation rules."
 ;Turn on icicles
 (icy-mode)
 
+;;;;;;;;;;;;;;;;;;;;;;
+; Line numbers
+(global-linum-mode)
+
 
 ;;;;;;;;;;;;;;;;
 ;; color theme

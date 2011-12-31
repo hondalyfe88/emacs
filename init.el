@@ -16,11 +16,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; language modes
 
-;;;;;;;;;;;;;;;;
-;; scala
-;;(add-to-list 'load-path "~/work/emacs/scala")  
-;;(require 'scala-mode-auto)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; customizations
 
@@ -41,6 +36,8 @@ by using nxml's indentation rules."
       (indent-region begin end))
     (message "Ah, much better!"))
 
+(global-set-key (kbd "C-c C-P") 'nxml-pretty-print-region)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; icicles
@@ -51,7 +48,15 @@ by using nxml's indentation rules."
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Line numbers
-(global-linum-mode)
+; http://www.emacswiki.org/emacs/LineNumbers
+; Using global-linum-mode in the init.el will cause Aquamacs to prompt you to save
+; preferences every time and you don't want to do that or it then
+; ONLY uses ~/Library/Preferences/Aquamacs Emacs/customizations.el
+; which prevents any regular ~/.emacs.d/init.el from loading.
+;(global-linum-mode 1)
+; On the other hand, this approach works just fine and doesn't cause any prompting to
+; save customizations since it isn't global
+(add-hook 'find-file-hook (lambda () (linum-mode 1)))
 
 
 ;;;;;;;;;;;;;;;;

@@ -1,52 +1,50 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Aquamacs setup
+;; ELPA
+;;; This was installed by package-install.el.
+;;; This provides support for the package system and
+;;; interfacing with ELPA, the package archive.
+;;; Move this code earlier if you want to reference
+;;; packages in your .emacs.
+(when
+    (load
+     (expand-file-name "~/.emacs.d/elpa/package.el"))
+  (package-initialize))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Matthew's custom setup preferences and mode loads.
+(setq load-path (cons "~/.emacs.d" load-path))
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Customizations
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Aquamacs
 ;; From customizations.el which gets generated in the
 ;; /Users/mccm06/Library/Preferences/Aquamacs Emacs/customizations.el folder.
+;;
 (custom-set-variables
  ;; Set the toolbar buttons to be plaintext
  '(ns-tool-bar-display-mode (quote labels) t)
  '(ns-tool-bar-size-mode (quote regular) t)
 )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Matthew's custom setup preferences and mode loads.
-
-(setq load-path (cons "~/.emacs.d" load-path))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; language modes
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; customizations
-;; From http://stackoverflow.com/questions/665600/how-can-i-get-emacs-to-revert-all-unchanged-buffers-when-switching-branches-in-g
-(global-auto-revert-mode)
-
-;; XML Formatter
-;; from http://sinewalker.wordpress.com/2008/06/26/pretty-printing-xml-with-emacs-nxml-mode/
-(defun nxml-pretty-print-region (begin end)
-  "Pretty format XML markup in region. You need to have nxml-mode
-http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
-this.  The function inserts linebreaks to separate tags that have
-nothing but whitespace between them.  It then indents the markup
-by using nxml's indentation rules."
-  (interactive "r")
-  (save-excursion
-      (nxml-mode)
-      (goto-char begin)
-      (while (search-forward-regexp "\>[ \\t]*\<" nil t)
-        (backward-char) (insert "\n"))
-      (indent-region begin end))
-    (message "Ah, much better!"))
-
-(global-set-key (kbd "C-c C-P") 'nxml-pretty-print-region)
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Special Keys
+;; set up alt key to work as META on Mac
+(set-keyboard-coding-system 'mac-roman)
+;; (mac-key-mode)
+;; http://www.emacswiki.org/emacs/AquamacsFAQ#toc6
+;;(setq mac-option-modifier 'meta)
+;;(setq mac-command-key-is-meta nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;
-; icicles
-(add-to-list 'load-path "~/.emacs.d/icicles")
-(require 'icicles)
-;Turn on icicles
-(icy-mode)
+;; Revert Files
+;; Always revert if changes are made to files outside of Emacs
+;; From http://stackoverflow.com/questions/665600/how-can-i-get-emacs-to-revert-all-unchanged-buffers-when-switching-branches-in-g
+(global-auto-revert-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Line numbers
@@ -60,9 +58,80 @@ by using nxml's indentation rules."
 ; save customizations since it isn't global
 (add-hook 'find-file-hook (lambda () (linum-mode 1)))
 
+;;;;;;;;;;;;;;;;;;;;;;
+;; Disable the ability to convert to lower case
+;(put 'downcase-region 'disabled nil)
 
 ;;;;;;;;;;;;;;;;
-;; color theme
+;; Tabs
+;; always use spaces instead of tabs
+(setq-default indent-tabs-mode nil)
+
+;;;;;;;;;;;;;;;;
+;; Kill Ring
+;; Merge the kill ring with the clipboard
+(setq x-select-enable-clipboard t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Desktop
+;; Save the state of the desktop and restore it upon reopening emacs
+;; Saving to the user's home directory seems to be the best choice.
+;; That is what is used as the default location to search for the .emacs.desktop file.
+;; Multiple files can be loaded.
+(desktop-save-mode 1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Fill Column
+;; I don't like fill unless I want it, so set it to an insanely large number
+;(set-fill-column 50000)
+(setq fill-column 50000)
+(auto-fill-mode -1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Font Lock
+;; Globally enable font-lock syntax highlighting
+;; Font Lock mode is a minor mode, always local to a particular buffer,
+;; which highlights (or "fontifies") using various faces according to
+;; the syntax of the text you are editing. It can recognize comments 
+;; and strings in most languages; in several languages, it can also
+;; recognize and properly highlight various other important constructs
+;; --for example, names of functions being defined or reserved keywords.
+;; To turn on Font Lock mode automatically in all modes which support it,
+;; use the function global-font-lock-mode
+;; http://www.phys.ufl.edu/docs/emacs/emacs_180.html
+(global-font-lock-mode 1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Tabbar
+;; After loading any new major mode, turn off the
+;; tab bar and turn off auto-fill
+(add-hook 'after-change-major-mode-hook 
+          '(lambda ()
+             (tabbar-mode -1)
+             (auto-fill-mode -1)))
+;; Turn off the tab bar when Emacs is launched
+(tabbar-mode -1)
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Libraries
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;; Speedbar
+;;(speedbar-change-initial-expansion-list "buffers")
+;;(global-set-key  [f8] 'speedbar-get-focus)
+
+;;;;;;;;;;;;;;;;;;;;;;;
+; icicles
+(add-to-list 'load-path "~/.emacs.d/icicles")
+(require 'icicles)
+;Turn on icicles
+(icy-mode)
+
+;;;;;;;;;;;;;;;;
+;; Color theme
 (add-to-list 'load-path "~/.emacs.d/color-theme")
 (require 'color-theme)
 (color-theme-initialize)
@@ -74,28 +143,9 @@ by using nxml's indentation rules."
 ;(color-theme-scintilla)
 (color-theme-gtk-ide)
 
-
-;; set up alt key to work as META on Mac
-(set-keyboard-coding-system 'mac-roman)
-;; (mac-key-mode)
-;; http://www.emacswiki.org/emacs/AquamacsFAQ#toc6
-;;(setq mac-option-modifier 'meta)
-;;(setq mac-command-key-is-meta nil)
-
-(put 'downcase-region 'disabled nil)
-
-;;;;;;;;;;;;;;;;
-;; always use spaces instead of tabs
-(setq-default indent-tabs-mode nil)
-
-;; Merge the kill ring with the clipboard
-(setq x-select-enable-clipboard t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; load some handy extensions
-
 ;;;;;;;;;;;;;;;;
 ;; ack
+;; Code regex searching tool
 (require 'ack)    
 
 ;;;;;;;;;;;;;;;;
@@ -107,6 +157,7 @@ by using nxml's indentation rules."
 ;; turn on flyspell mode
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
 (setq-default flyspell-mode t)
+
 ;; auto-load for flyspell mode
 (dolist (hook '(markdown-mode-hook))
   (add-hook hook (lambda () (flyspell-mode 1)))
@@ -118,33 +169,30 @@ by using nxml's indentation rules."
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 
+
 ;;;;;;;;;;;;;;;;
 ;; light symbol
+;; Floatover highlighting for symbols
 (autoload 'light-symbol "light-symbol" "Float-over highlighting for symbols." t)
 
 ;;;;;;;;;;;;;;;;
-;; magit (git support)
+;; magit
+;; Git support
 (require 'magit)
 
 ;;;;;;;;;;;;;;;;
-;; load up modes for msf-abbrev
+;; Ruby
 (require 'ruby-mode)
-
-;;;;;;;;;;;;;;;;
-;; load up msf-abbrevs
-(add-to-list 'load-path "~/.emacs.d/msf-abbrev")
-;; ensure abbrev mode is always on
-(setq-default abbrev-mode t)
-;; do not bug me about saving my abbreviations
-(setq save-abbrevs nil)
 
 
 ;;;;;;;;;;;;;;;;
 ;; paraedit
+;; Parenthesis matching
 (autoload 'paredit-mode "paredit" "Minor mode for pseudo-structurally editing Lisp code." t)
 
 ;;;;;;;;;;;;;;;;
 ;; wrap-region
+;; Paired character entry (wrapping with characters) feature
 (add-to-list 'load-path "~/.emacs.d/wrap-region.el")
 (require 'wrap-region)
 ;(wrap-region-mode t)
@@ -153,6 +201,7 @@ by using nxml's indentation rules."
           '(lambda() (wrap-region-mode t)
 ))
 
+;; For Markdown, customize what characters are wrapped
 (add-hook 'markdown-mode-hook
           '(lambda()
           (wrap-region-add-punctuation "+" "+")
@@ -180,12 +229,8 @@ by using nxml's indentation rules."
 ))
 
 
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; associations
-
-;; add markdown mode automatically
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Markdown
 (autoload 'markdown-mode "markdown-mode.el"
    "Major mode for editing Markdown files" t)
 (setq auto-mode-alist
@@ -193,50 +238,31 @@ by using nxml's indentation rules."
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
 
-;;;;;;;;;;;;;;;;
-;; html mode for HTML files
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; HTML
 (setq auto-mode-alist (cons '("\\.html?$" . html-mode) auto-mode-alist))
 
-;;;;;;;;;;;;;;;;
-;; Rake files are ruby too
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Rake
+;; Rake files are actually Ruby too
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; load-em up
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Shell
+;; System shell embedded within Emacs
 (require 'shell)
-(require 'ruby-mode)
 
-;;;;;;;;;;;;;;;;
-;; msf-abbrev
-(require 'msf-abbrev)
-(setq msf-abbrev-verbose t) ;; optional
-(setq msf-abbrev-root "~/.emacs.d/msf-abbrev/abbrevs")
-(global-set-key (kbd "C-c l") 'msf-abbrev-goto-root)
-(global-set-key (kbd "C-c a") 'msf-abbrev-define-new-abbrev-this-mode)
-(msf-abbrev-load)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; little found functions
-
-;; found world count function
-(defun word-count nil "Count words in buffer" (interactive)
-  (shell-command-on-region (point-min) (point-max) "wc -w"))
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Doc mode didn't parse code block `stuff` in Asciidoc very well
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Doc mode
+;; Didn't parse code block `stuff` in Asciidoc very well
+;; DISABLING FOR NOW
 ; (add-to-list 'load-path "~/.emacs.d/doc-mode")
 ; (autoload 'doc-mode "doc-mode")
 ; (add-to-list 'auto-mode-alist '("\\.asc$" . doc-mode))
 ; (add-to-list 'auto-mode-alist '("\\.ascii$" . doc-mode))
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ADOC ASCIIDOC package
 ;; Even shows headers in difference sizes
 (add-to-list 'load-path "~/.emacs.d/adoc-mode")
@@ -245,24 +271,11 @@ by using nxml's indentation rules."
 (add-to-list 'auto-mode-alist (cons "\\.asc\\'" 'adoc-mode))
 (add-to-list 'auto-mode-alist (cons "\\.asciidoc\\'" 'adoc-mode))
 
-;; Save the state of the desktop and restore it upon reopening emacs
-;; Saving to the user's home directory seems to be the best choice.
-;; That is what is used as the default location to search for the .emacs.desktop file.
-;; Multiple files can be loaded.
-(desktop-save-mode 1)
-
-;; I don't like fill unless I want it, so set it to an insanely large number
-;(set-fill-column 50000)
-(setq fill-column 50000)
-(auto-fill-mode -1)
-
+;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Groovy mode
-;;; turn on syntax highlighting
-(global-font-lock-mode 1)
-
-;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
-(add-to-list 'load-path "~/.emacs.d/groovy")
+;(add-to-list 'load-path "~/.emacs.d/groovy")
 (autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
+;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
 ;; For some reason, these recommendations don't seem to work with Aquamacs
 (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\.gradle$" . groovy-mode))
@@ -278,20 +291,33 @@ by using nxml's indentation rules."
              (require 'groovy-electric)
              (groovy-electric-mode)))
 
-;INI File highlighting
+;;;;;;;;;;;;;;;;;;;;;;
+;; INI File highlighting
 (require 'ini-mode)
 (add-to-list 'auto-mode-alist '(".*\\.ini$" . ini-mode))
 (add-to-list 'auto-mode-alist '(".*\\.gitconfig$" . ini-mode))
 
-;File associations for org-mode
-(add-to-list 'auto-mode-alist '("\.org$" . org-mode))
-(add-to-list 'auto-mode-alist '("\.orgmode$" . org-mode))
-
-;Wire in showoff mode
+;;;;;;;;;;;;;;;;;;;;;;
+;; Load showoff mode
+;; https://github.com/developernotes/showoff-mode
 (add-to-list 'load-path "~/.emacs.d/showoff-mode")
 (require 'showoff-mode)
 
-;Keyboard shortcuts
+;;;;;;;;;;;;;;;;;;;;;;;
+;; Org Mode
+;; File Associations
+(add-to-list 'auto-mode-alist '("\.org$" . org-mode))
+(add-to-list 'auto-mode-alist '("\.orgmode$" . org-mode))
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Keyboard Shortcuts
+;(global-set-key (kbd "M-w") 'kill-buffer)
+;(define-key (kbd "M-w") 'kill-buffer)
+
 ;(global-set-key [f6] 'split-window-horizontally)
 ;(global-set-key [f7] 'split-window-vertically)
 ;(global-set-key [kbd "M-d"] 'delete-window)
@@ -299,32 +325,42 @@ by using nxml's indentation rules."
 ;(global-set-key [kbd "M-s"] 'save-buffer)
 ;(global-set-key [kbd "M-z"] 'undo)
 
-
-;;; This was installed by package-install.el.
-;;; This provides support for the package system and
-;;; interfacing with ELPA, the package archive.
-;;; Move this code earlier if you want to reference
-;;; packages in your .emacs.
-(when
-    (load
-     (expand-file-name "~/.emacs.d/elpa/package.el"))
-  (package-initialize))
-
+;; Flyspell checking
 (global-set-key (kbd "C-c j") 'flyspell-check-previous-highlighted-word)
 
-;; Turn off the tab bar
-(tabbar-mode -1)
-
-;; Use ibuffer for buffer nav
+;; Use ibuffer for buffer navigation
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;;(speedbar-change-initial-expansion-list "buffers")
-;;(global-set-key  [f8] 'speedbar-get-focus)
 
-(add-hook 'after-change-major-mode-hook 
-          '(lambda ()
-             (tabbar-mode -1)
-             (auto-fill-mode -1)))
+(global-set-key (kbd "C-x C-G") 'magit-status)
 
-;(global-set-key (kbd "M-w") 'kill-buffer)
-;(define-key (kbd "M-w") 'kill-buffer)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Custom Code
+
+;;;;;;;;;;;;;;;;;;;;;;
+;; XML Formatter
+;; from http://sinewalker.wordpress.com/2008/06/26/pretty-printing-xml-with-emacs-nxml-mode/
+(defun nxml-pretty-print-region (begin end)
+  "Pretty format XML markup in region. You need to have nxml-mode
+http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
+this.  The function inserts linebreaks to separate tags that have
+nothing but whitespace between them.  It then indents the markup
+by using nxml's indentation rules."
+  (interactive "r")
+  (save-excursion
+      (nxml-mode)
+      (goto-char begin)
+      (while (search-forward-regexp "\>[ \\t]*\<" nil t)
+        (backward-char) (insert "\n"))
+      (indent-region begin end))
+    (message "Ah, much better!"))
+
+(global-set-key (kbd "C-c C-P") 'nxml-pretty-print-region)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Word count function
+(defun word-count nil "Count words in buffer" (interactive)
+  (shell-command-on-region (point-min) (point-max) "wc -w"))

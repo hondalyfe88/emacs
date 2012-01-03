@@ -18,6 +18,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; customizations
+;; From http://stackoverflow.com/questions/665600/how-can-i-get-emacs-to-revert-all-unchanged-buffers-when-switching-branches-in-g
+(global-auto-revert-mode)
 
 ;; XML Formatter
 ;; from http://sinewalker.wordpress.com/2008/06/26/pretty-printing-xml-with-emacs-nxml-mode/

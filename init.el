@@ -31,6 +31,14 @@
  '(ns-tool-bar-size-mode (quote regular) t)
 )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Font
+;(set-default-font "-apple-monaco*-medium-r-normal--16-*-*-*-*-*-fontset-monaco12")
+;(set-default-font "-apple-menlo*-medium-r-normal--16-*-*-*-*-*-fontset-monaco12")
+;(set-default-font "-apple-bitstream vera sans mono-medium-r-normal--12-120-72-72-m-120-iso10646-1")
+;(set-default-font "-apple-dejavu sans mono-medium-r-normal--0-0-0-0-m-0-mac-roman")
+(set-default-font "-apple-inconsolata-medium-r-normal--16-*-*-*-*-*-fontset-monaco12")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Special Keys
 ;; set up alt key to work as META on Mac

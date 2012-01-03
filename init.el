@@ -38,6 +38,8 @@
 ;(set-default-font "-apple-bitstream vera sans mono-medium-r-normal--12-120-72-72-m-120-iso10646-1")
 ;(set-default-font "-apple-dejavu sans mono-medium-r-normal--0-0-0-0-m-0-mac-roman")
 (set-default-font "-apple-inconsolata-medium-r-normal--16-*-*-*-*-*-fontset-monaco12")
+;; Mac Default
+;(set-default-font "-apple-Monaco-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Special Keys
@@ -317,7 +319,7 @@
 (add-to-list 'auto-mode-alist '("\.org$" . org-mode))
 (add-to-list 'auto-mode-alist '("\.orgmode$" . org-mode))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MOBILE ORG
 ;; http://mobileorg.ncogni.to/doc/getting-started/using-dropbox/
 ;;
@@ -331,7 +333,17 @@
  '(org-agenda-files (quote ("~/org")))
 )
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; SR Speedbar
+;; Opens in same frame
+;; http://www.emacswiki.org/emacs/SrSpeedbar
+(require 'sr-speedbar)
+(global-set-key (kbd "C-x C-P") 'sr-speedbar-toggle)
+(make-face 'speedbar-face)
+(set-face-font 'speedbar-face "Inconsolata-11")
+(setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
+(setq speedbar-use-images nil)
+(setq speedbar-show-unknown-files 1)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

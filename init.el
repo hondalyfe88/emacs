@@ -124,7 +124,6 @@
 
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Libraries
 
@@ -346,6 +345,8 @@
 (setq speedbar-show-unknown-files 1)
 
 
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keyboard Shortcuts
 ;(global-set-key (kbd "M-w") 'kill-buffer)
@@ -366,6 +367,8 @@
 
 
 (global-set-key (kbd "C-x C-G") 'magit-status)
+
+(global-set-key (kbd "C-x C-r") 'eval-region)
 
 
 
@@ -397,3 +400,53 @@ by using nxml's indentation rules."
 ;; Word count function
 (defun word-count nil "Count words in buffer" (interactive)
   (shell-command-on-region (point-min) (point-max) "wc -w"))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Final setup
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Turn on speedbar on the whole window
+;(setq sr-speedbar-width-x 25)
+;(setq sr-speedbar-width-console 25)
+;(setq sr-speedbar-right-side nil)
+;(setq sr-speedbar-max-width 25)
+(setq speedbar-frame-parameters
+      '((minibuffer)
+	(width . 40)
+	(border-width . 0)
+	(menu-bar-lines . 0)
+	(tool-bar-lines . 0)
+	(unsplittable . t)
+	(left-fringe . 0)))
+(setq speedbar-hide-button-brackets-flag t)
+(setq speedbar-show-unknown-files t)
+(setq speedbar-smart-directory-expand-flag t)
+(setq speedbar-use-images nil)
+(setq sr-speedbar-auto-refresh nil)
+(setq sr-speedbar-max-width 70)
+(setq sr-speedbar-right-side nil)
+(setq sr-speedbar-width-console 40)
+
+(when window-system
+  (defadvice sr-speedbar-open (after sr-speedbar-open-resize-frame activate)
+    (set-frame-width (selected-frame)
+                     (+ (frame-width) sr-speedbar-width)))
+  (ad-enable-advice 'sr-speedbar-open 'after 'sr-speedbar-open-resize-frame)
+
+  (defadvice sr-speedbar-close (after sr-speedbar-close-resize-frame activate)
+    (sr-speedbar-recalculate-width)
+    (set-frame-width (selected-frame)
+                     (- (frame-width) sr-speedbar-width)))
+  (ad-enable-advice 'sr-speedbar-close 'after 'sr-speedbar-close-resize-frame))
+
+;(sr-speedbar-toggle)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;; Initial splits
+;; Full length window on left. Two short vertical stacks on right.
+(split-window-horizontally)
+(other-window 1)
+(split-window-vertically)

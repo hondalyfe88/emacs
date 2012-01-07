@@ -371,6 +371,7 @@
 ;; Run the code under the cursor
 (global-set-key (kbd "C-x C-r") 'eval-region)
 
+;; Ack for a file name in the minibuffer
 (global-set-key (kbd "C-x C-a") 'ack-find-file)
 
 

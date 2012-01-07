@@ -365,9 +365,10 @@
 ;; Use ibuffer for buffer navigation
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-
+;; Git Status Window
 (global-set-key (kbd "C-x C-G") 'magit-status)
 
+;; Run the code under the cursor
 (global-set-key (kbd "C-x C-r") 'eval-region)
 
 

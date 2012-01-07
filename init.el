@@ -371,6 +371,8 @@
 ;; Run the code under the cursor
 (global-set-key (kbd "C-x C-r") 'eval-region)
 
+(global-set-key (kbd "C-x C-a") 'ack-find-file)
+
 
 
 

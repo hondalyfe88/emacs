@@ -454,3 +454,15 @@ by using nxml's indentation rules."
 (split-window-horizontally)
 (other-window 1)
 (split-window-vertically)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Customize Font Faces
+;; http://www.emacswiki.org/emacs/CustomizingFaces
+(custom-set-faces
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 2.2))))
+ '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.7))))
+ '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.3))))
+)

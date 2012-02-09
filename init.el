@@ -147,8 +147,8 @@
 ;(color-theme-arjen)
 
 ;Solarized color theme
-;(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
-;(require 'color-theme-solarized)
+(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
+(require 'color-theme-solarized)
 ;(color-theme-scintilla)
 (color-theme-gtk-ide)
 

@@ -149,8 +149,11 @@
 ;Solarized color theme
 (add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
 (require 'color-theme-solarized)
+
+; Setting default color themes
 ;(color-theme-scintilla)
-(color-theme-gtk-ide)
+;(color-theme-gtk-ide)
+(color-theme-solarized-light)
 
 ;;;;;;;;;;;;;;;;
 ;; ack

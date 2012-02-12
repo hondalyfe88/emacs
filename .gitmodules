@@ -10,3 +10,6 @@
 [submodule "icicles"]
 	path = icicles
 	url = https://github.com/emacsmirror/icicles
+[submodule "groovy"]
+	path = groovy
+	url = git://github.com/matthewmccullough/emacs-groovy-mode.git

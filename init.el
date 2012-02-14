@@ -147,10 +147,13 @@
 ;(color-theme-arjen)
 
 ;Solarized color theme
-;(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
-;(require 'color-theme-solarized)
+(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
+(require 'color-theme-solarized)
+
+; Setting default color themes
 ;(color-theme-scintilla)
-(color-theme-gtk-ide)
+;(color-theme-gtk-ide)
+(color-theme-solarized-light)
 
 ;;;;;;;;;;;;;;;;
 ;; ack
@@ -216,9 +219,10 @@
           (wrap-region-add-punctuation "+" "+")
           (wrap-region-add-punctuation "_" "_")
           (wrap-region-add-punctuation "`" "`")
+          (wrap-region-add-punctuation "[" "]")
+          ;* is no longer registered because it conflicts with bulleted lists
           ;(wrap-region-add-punctuation "*" "*")
-          ;(wrap-region-set-mode-punctuations '("\"" "("))
-          (wrap-region-set-mode-punctuations '("\"" "(" "+" "_" "`"))
+          (wrap-region-set-mode-punctuations '("\"" "(" "+" "_" "`" "["))
           (wrap-region-mode t)
           (auto-fill-mode -1)
 ))
